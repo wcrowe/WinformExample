@@ -1,0 +1,34 @@
+using System;
+using System.Data;
+using System.Data.Common;
+using System.Data.SqlClient;
+
+#if NETCOREAPP
+using Microsoft.Data.SqlClient;
+#endif
+
+namespace MyLibrary
+{
+    public class MyDataAccess
+    {
+        private readonly string _connectionString;
+
+        public MyDataAccess(string connectionString)
+        {
+            _connectionString = connectionString;
+        }
+
+        public void ExecuteSql(string sql)
+        {
+            using (DbConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (DbCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = sql;
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+    }
+}
