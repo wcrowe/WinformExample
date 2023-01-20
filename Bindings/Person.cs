@@ -3,10 +3,10 @@
     public class PersonOld
     {
         private bool _isDirty = false;
-        private string _firstName;
-        private string _lastName;
+        private string _firstName = null!;
+        private string _lastName = null!;
         private int _age;
-        private string _address;
+        private string _address = null!;
         private bool _isEmployed;
 
         public string FirstName

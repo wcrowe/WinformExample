@@ -11,15 +11,15 @@ namespace Bindings.Models
     public class Person : INotifyPropertyChanged
     {
         private int _id;
-        private string _firstName;
-        private string _lastName;
-        private string _email;
-        private string _phoneNumber;
-        private string _address;
+        private string _firstName = null!;
+        private string _lastName = null!;
+        private string _email = null!;
+        private string _phoneNumber = null!;
+        private string _address = null!;
         private int _age;
         private bool _isDirty = false;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         [Key]
         public int Id
@@ -114,7 +114,7 @@ namespace Bindings.Models
 
         protected void OnPropertyChanged(string propertyName)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
+            PropertyChangedEventHandler? handler = PropertyChanged;
             if (handler != null)
             {
                 handler(this, new PropertyChangedEventArgs(propertyName));

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using Bindings.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,14 +6,14 @@ namespace Bindings
 {
     public class MyViewModel
     {
-        private BindingList<Person> _models;
+        private BindingList<Person> _models = null!;
         public BindingList<Person> Models
         {
             get { return _models; }
             set
             {
                 _models = value;
-                _models.ListChanged += Models_ListChanged;
+                _models.ListChanged += Models_ListChanged!;
             }
         }
         public void SortByProperty1()
@@ -73,6 +68,6 @@ namespace Bindings
 
     public class MyDbContext : DbContext
     {
-        public DbSet<Person> MyEntities { get; set; }
+        public DbSet<Person> MyEntities { get; set; } = null!;
     }
 }
