@@ -5,7 +5,9 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinformExample", "WinformExample\WinformExample.csproj", "{16B96ACD-38A0-433A-9C12-7355D516A5A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsApp", "WinFormsApp\WinFormsApp.csproj", "{191D2DC2-9723-476B-9702-CC5BC747326C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinFormsApp", "WinFormsApp\WinFormsApp.csproj", "{191D2DC2-9723-476B-9702-CC5BC747326C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bindings", "Bindings\Bindings.csproj", "{B3A1F17C-7ACC-45D4-9D37-8463D7CB442B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{191D2DC2-9723-476B-9702-CC5BC747326C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{191D2DC2-9723-476B-9702-CC5BC747326C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{191D2DC2-9723-476B-9702-CC5BC747326C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3A1F17C-7ACC-45D4-9D37-8463D7CB442B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3A1F17C-7ACC-45D4-9D37-8463D7CB442B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3A1F17C-7ACC-45D4-9D37-8463D7CB442B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3A1F17C-7ACC-45D4-9D37-8463D7CB442B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
