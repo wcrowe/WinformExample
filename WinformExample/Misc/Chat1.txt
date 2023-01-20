@@ -1,0 +1,309 @@
+﻿crowe.will@protonmail.com
+Example of mydbcontext in c# and ef
+
+Here is an example of a DbContext class called MyDbContext using Entity Framework (EF) in C#:
+
+Copy code
+using Microsoft.EntityFrameworkCore;
+
+public class MyDbContext : DbContext
+{
+    public DbSet<Product> Products { get; set; }
+    public DbSet<Category> Categories { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlServer(
+            "Server=(localdb)\\mssqllocaldb;Database=MyDb;Trusted_Connection=True;");
+    }
+}
+In this example, MyDbContext inherits from DbContext and has two DbSet properties, Products and Categories. The OnConfiguring method is overridden to configure the context to use a SQL Server database with a specific connection string.
+
+Note that you will need to install the Microsoft.EntityFrameworkCore.SqlServer package in order to use the UseSqlServer extension method.
+Also remember to add the class in Startup.cs file in ConfigureServices method to use it as a service.
+
+Copy code
+services.AddDbContext<MyDbContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
+
+
+
+crowe.will@protonmail.com
+Example of person model code first ef core
+Here is an example of a Person model class using Code First approach in EF Core:
+
+Copy code
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+public class Person
+{
+    [Key]
+    public int Id { get; set; }
+
+    [Required]
+    public string FirstName { get; set; }
+
+    [Required]
+    public string LastName { get; set; }
+
+    [Required]
+    public string Email { get; set; }
+    public string PhoneNumber { get; set; }
+    public string Address { get; set; }
+
+    [Required]
+    public int Age { get; set; }
+}
+In this example, the Person class has a primary key Id and several other properties such as FirstName, LastName, Email, PhoneNumber, Address, and Age. The [Key] attribute is used to specify that the Id property is the primary key of the table. The [Required] attribute is used to specify that these properties are required and cannot be null.
+
+You'll also need to add this class in your DbContext class
+
+Copy code
+public DbSet<Person> People { get; set; }
+You'll also need to run migration commands to create the table in the database.
+
+Copy code
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+This is a basic example of a model class for a Person, and you can add more properties and attributes as needed for your application.
+
+
+
+
+crowe.will@protonmail.com
+Can I add inotifypropertychsnded to the model
+Yes, you can add INotifyPropertyChanged to your model class in order to notify the UI when a property value changes. INotifyPropertyChanged is an interface that defines an event that is raised when a property value changes.
+
+Here's an example of how you can implement INotifyPropertyChanged in your Person model class:
+
+Copy code
+using System.ComponentModel;
+
+public class Person : INotifyPropertyChanged
+{
+    private int _id;
+    private string _firstName;
+    private string _lastName;
+    private string _email;
+    private string _phoneNumber;
+    private string _address;
+    private int _age;
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    [Key]
+    public int Id
+    {
+        get { return _id; }
+        set
+        {
+            _id = value;
+            OnPropertyChanged("Id");
+        }
+    }
+
+    [Required]
+    public string FirstName
+    {
+        get { return _firstName; }
+        set
+        {
+            _firstName = value;
+            OnPropertyChanged("FirstName");
+        }
+    }
+
+    [Required]
+    public string LastName
+    {
+        get { return _lastName; }
+        set
+        {
+            _lastName = value;
+            OnPropertyChanged("LastName");
+        }
+    }
+
+    [Required]
+    public string Email
+    {
+        get { return _email; }
+        set
+        {
+            _email = value;
+            OnPropertyChanged("Email");
+        }
+    }
+
+    public string PhoneNumber
+    {
+        get { return _phoneNumber; }
+        set
+        {
+            _phoneNumber = value;
+            OnPropertyChanged("PhoneNumber");
+        }
+    }
+
+    public string Address
+    {
+        get { return _address; }
+        set
+        {
+            _address = value;
+            OnPropertyChanged("Address");
+        }
+    }
+
+    [Required]
+    public int Age
+    {
+        get { return _age; }
+        set
+        {
+            _age = value;
+            OnPropertyChanged("Age");
+        }
+    }
+
+    protected void OnPropertyChanged(string propertyName)
+    {
+        PropertyChangedEventHandler handler = PropertyChanged;
+        if (handler != null)
+        {
+            handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+}
+In this example, the Person class implements the INotifyPropertyChanged interface, and declares an event called PropertyChanged. The OnPropertyChanged method is called in the setter of each property to raise the PropertyChanged event, passing the name of the property that was changed as an argument.
+
+This allows any bound controls in the UI to automatically update their values when a property value changes.
+
+
+
+
+crowe.will@protonmail.com
+Cool. Can I have isdirty flag
+Yes, you can have an IsDirty flag in your model class to track whether the model's data has been modified. Here is an example of how you can implement an IsDirty flag in your Person model class:
+
+Copy code
+public class Person : INotifyPropertyChanged
+{
+    private int _id;
+    private string _firstName;
+    private string _lastName;
+    private string _email;
+    private string _phoneNumber;
+    private string _address;
+    private int _age;
+    private bool _isDirty = false;
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    [Key]
+    public int Id
+    {
+        get { return _id; }
+        set
+        {
+            _id = value;
+            OnPropertyChanged("Id");
+        }
+    }
+
+    [Required]
+    public string FirstName
+    {
+        get { return _firstName; }
+        set
+        {
+            _firstName = value;
+            OnPropertyChanged("FirstName");
+            IsDirty = true;
+        }
+    }
+
+    [Required]
+    public string LastName
+    {
+        get { return _lastName; }
+        set
+        {
+            _lastName = value;
+            OnPropertyChanged("LastName");
+            IsDirty = true;
+        }
+    }
+
+    [Required]
+    public string Email
+    {
+        get { return _email; }
+        set
+        {
+            _email = value;
+            OnPropertyChanged("Email");
+            IsDirty = true;
+        }
+    }
+
+    public string PhoneNumber
+    {
+        get { return _phoneNumber; }
+        set
+        {
+            _phoneNumber = value;
+            OnPropertyChanged("PhoneNumber");
+            IsDirty = true;
+        }
+    }
+
+    public string Address
+    {
+        get { return _address; }
+        set
+        {
+            _address = value;
+            OnPropertyChanged("Address");
+            IsDirty = true;
+        }
+    }
+
+    [Required]
+    public int Age
+    {
+        get { return _age; }
+        set
+        {
+            _age = value;
+            OnPropertyChanged("Age");
+            IsDirty = true;
+        }
+    }
+
+    public bool IsDirty
+    {
+        get { return _isDirty; }
+        set
+        {
+            _isDirty = value;
+            OnPropertyChanged("IsDirty");
+        }
+    }
+
+    protected void OnPropertyChanged(string propertyName)
+    {
+        PropertyChangedEventHandler handler = PropertyChanged;
+        if (handler != null)
+        {
+            handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+}
+In this example, an IsDirty property has been added which is a boolean flag that is set to true whenever any of the properties are modified.
+
+You can use this flag in your application logic to decide whether to save changes or discard them, or to prompt the user for confirmation before navigating away from a page with unsaved changes, and so on.
+
+You could also reset the flag after a save or when loading data again to the model.
